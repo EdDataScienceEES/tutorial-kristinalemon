@@ -1,14 +1,6 @@
 <center><img src="{{ site.baseurl }}/tutheaderbl.png" alt="Img"></center>
 
 To add images, replace `tutheaderbl1.png` with the file name of any image you upload to your GitHub repository.
----
-layout: tutorial
-title: Generalised linear modelling and model interpretation
-subtitle: When linear models don't fit
-date: 2024-11-21
-author: Kristina McGuinness
-tags: modelling
----
 
 ### Tutorial Aims
 
