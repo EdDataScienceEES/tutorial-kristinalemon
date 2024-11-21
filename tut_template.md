@@ -1,3 +1,7 @@
+# Generalised Linear Modelling and Model Interpretation
+## When linear model assumptions are violated
+
+
 <center><img src="{{ site.baseurl }}/tutheaderbl.png" alt="Img"></center>
 
 To add images, replace `tutheaderbl1.png` with the file name of any image you upload to your GitHub repository.
@@ -15,14 +19,11 @@ To add images, replace `tutheaderbl1.png` with the file name of any image you up
 ---------------------------
 
 ### Introduction
-Models are an important part of science, allowing us to test for and show correlations between different variables – for example, if an increase in rainfall correlates to an increase in plant height.
-If you are familiar with linear models, you are likely familiar with their 3 assumptions: all observations are independent, the residuals are normally distributed, and the residuals show equal variance.
-However, what happens when one of these assumptions are broken? In this tutorial we will use generalised linear models (glms) to deal with this exact situation, and also discuss model interpretation.
+Models are an important part of science, allowing us to test for and show correlations between different variables – for example, if an increase in rainfall correlates to an increase in plant height. If you are familiar with linear models, you are likely familiar with their 3 assumptions: all observations are independent, the residuals are normally distributed, and the residuals show equal variance. However, what happens when one of these assumptions are violated? In this tutorial we will use generalised linear models (glms) to deal with this exact situation, and also discuss model interpretation.
 
-For the model, we will use population data on arctic foxes in Sweden, taken from the WWF's Living Planet Index. The full LPI can be found [here](https://www.livingplanetindex.org/search). We will also use `ggplot2` package to visualise trends.
-For those not familiar with `ggplot2`, or those who would like a refresher, check out one of these tutorials on data visualisation:
-[Beautiful and Informative Data Visualisation](https://ourcodingclub.github.io/tutorials/datavis/)
-[Customising your figures](https://ourcodingclub.github.io/tutorials/data-vis-2/)
+For the model, we will use population data on arctic foxes in Sweden, taken from the WWF's Living Planet Index. The full LPI can be found [here](https://www.livingplanetindex.org/search). We will also use `ggplot2` package to visualise trends. For those not familiar with `ggplot2`, or those who would like a refresher, check out one of these tutorials on data visualisation:
+    - [Beautiful and Informative Data Visualisation](https://ourcodingclub.github.io/tutorials/datavis/)
+    - [Customising your figures](https://ourcodingclub.github.io/tutorials/data-vis-2/)
 
 This tutorial also assumes knowledge of linear models, so be sure to check out [this tutorial](https://ourcodingclub.github.io/tutorials/modelling/) if you are unfamiliar with them, or need a refresher.
 
@@ -108,11 +109,9 @@ fox_glm <- glm(Population ~ YearScaled, data = arctic_foxes, family = "poisson")
 plot(fox_glm)
 
 ```
-Comparing the plots of the two models, the residuals vs fitted plot looks much better for the GLM than the LM. The scale-location plot for the GLM also looks flatter, i.e. the residuals now show more
-equal variance compared to the LM. The points on the Q-Q residuals plot follow the dotted diagonal line more closely as well, showing that they are now closer to a normal distribution.
+Comparing the plots of the two models, the residuals vs fitted plot looks much better for the GLM than the LM. The scale-location plot for the GLM also looks flatter, i.e. the residuals now show more equal variance compared to the LM. The points on the Q-Q residuals plot follow the dotted diagonal line more closely as well, showing that they are now closer to a normal distribution.
 
-**Note**: If you look at the residuals vs leverage plot, you'll notice that the GLM makes it evident that there are some leverage points in the data. We could remove them,
-however we will leave them in for this tutorial because our dataset is small, so removing them could significantly affect our analysis and interpretation of the model.
+**Note**: If you look at the residuals vs leverage plot, you'll notice that the GLM makes it evident that there are some leverage points in the data. We could remove them, however we will leave them in for this tutorial because our dataset is small, so removing them could significantly affect our analysis and interpretation of the model.
 
 ### Interpret the GLM
 {: #part2c}
