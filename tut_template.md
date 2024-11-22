@@ -17,7 +17,7 @@ tags: modelling
     - [Build the GLM](#part2b)
     - [Interpret the GLM](#part2c)
 3. [Visualise population trends](#part3a)
-    - [Add predicted trends based on your model](#part3b)
+    - [Add predicted trends based on the model](#part3b)
 
 
 ---------------------------
@@ -27,7 +27,7 @@ Models are an important part of science, allowing us to test for and show correl
 If you are familiar with linear models, you are likely familiar with their 3 assumptions: all observations are independent, the residuals are normally distributed, and the residuals show equal variance.
 However, what happens when one of these assumptions are broken? In this tutorial we will use generalised linear models (glms) to deal with this exact situation, and also discuss model interpretation.
 
-For the model, we will use population data on arctic foxes in Sweden, taken from the WWF's Living Planet Index. The full LPI can be found [here](https://www.livingplanetindex.org/search). We will also use `ggplot2` package to visualise trends.
+For the model, we will use population data on arctic foxes in Sweden, taken from the WWF's Living Planet Index. The full LPI can be found [here](https://www.livingplanetindex.org/search). We will also use the `ggplot2` package to visualise trends.
 For those not familiar with `ggplot2`, or those who would like a refresher, check out one of these tutorials on data visualisation:
 [Beautiful and Informative Data Visualisation](https://ourcodingclub.github.io/tutorials/datavis/)
 [Customising your figures](https://ourcodingclub.github.io/tutorials/data-vis-2/)
@@ -70,7 +70,7 @@ arctic_foxes <- data %>%
          Country.list == "Sweden") %>%                                        # filters for arctic fox populations in Sweden only
   select(-c(X1, Data.source.citation, Sub.species, Authority)) %>%            # removes unnecessary columns
   subset(!is.na(Population)) %>%                                              # removes rows where Population = NA
-  subset(Population != 0.00)
+  subset(Population != 0.00)                                                  # removes rows where Population = 0 i.e. there were no foxes found
 
 # Explore the data
 head(arctic_foxes)
@@ -89,7 +89,7 @@ fox_lm <- lm(Population ~ YearScaled, data = arctic_foxes)
 ```
 
 Now, use `plot()` to plot your model and check if any assumptions have been violated. You will notice that the points on the Q-Q residuals plot do not quite follow a straight line
-(the points should line up with the dotted diagonal line). This means that residuals in our data are likely not normally distributed, violating one of the assumptions of linear modelling!
+(in an ideal world, the points would line up with the dotted diagonal line). This means that residuals in our data are likely not normally distributed, violating one of the assumptions of linear modelling!
 
 The residuals vs fitted and scale-location plots are not looking great either. The red line on the residuals vs fitted plot forms a parabola, implying that our data does not follow a linear pattern.
 Similarly, the red line on the scale-location plot also forms a parabola, implying that the residuals in our data do not show equal variance, violating another assumption of linear modelling.
@@ -103,7 +103,7 @@ Generalised linear models (GLMs) are similar to linear models in that they also 
 are not normally distributed. Residuals not being normally distributed tends to happen with count data, which is what we are dealing with (as we are looking at arctic fox populations, 
 more specifically we are looking at the abundance of adults over time).
 
-GLMs use what is called a 'link function', which tells the model what kind of distribution the reponse variable has. In this case, our data (count data) has a "poisson" distribution.
+GLMs use what is called a 'link function', which tells the model what kind of distribution the response variable has. In this case, our data (count data) has a "poisson" distribution.
 
 ### Build the GLM
 {: #part2b}
@@ -119,21 +119,107 @@ plot(fox_glm)
 Comparing the plots of the two models, the residuals vs fitted plot looks much better for the GLM than the LM. The scale-location plot for the GLM also looks flatter, i.e. the residuals now show more
 equal variance compared to the LM. The points on the Q-Q residuals plot follow the dotted diagonal line more closely as well, showing that they are now closer to a normal distribution.
 
-**Note**: If you look at the residuals vs leverage plot, you'll notice that the GLM makes it evident that there are some leverage points in the data. We could remove them,
-however we will leave them in for this tutorial because our dataset is small, so removing them could significantly affect our analysis and interpretation of the model.
+**Note**: If you look at the residuals vs leverage plot, you'll notice that the GLM makes it evident that there are some leverage points in the data (i.e. points that significantly influence the model).
+We could remove them, however we will leave them in for this tutorial because our dataset is small, so removing them could significantly affect our analysis and interpretation of the model.
 
 ### Interpret the GLM
 {: #part2c}
 
+Now, use the `summary()` function on fox_glm. A table will appear in the console that looks like this:
+![alt text](insert link to photo)
 
+But what does this mean? Let's start with the Estimate column. The Estimate for (Intercept) simply refers to where the line of best fit crosses the y-axis if you were to plot the data.
+In this case, the line of best fit crosses the y-axis at 4.267. This means that in year 0 (remember, year 0 = 1974 because we are using YearScaled!), the Population is 4.27 foxes.
+**Keep in mind that this is the log(Population), and not the actual population at year 0. To find the real population at year 0, we can exponentiate 4.27 with `exp()`. We can then check our answer with `ggpredict()` from the `ggeffects` package.**
+
+```r
+# Check summary table for model interpretation
+summary(fox_glm)
+
+# From the table, we see that log(Population) in year 0 = 4.267, so use exp() to find the actual Population
+exp(4.267)
+
+# There are 71 adult arctic foxes present in year 0. We can check this with ggpredict(). ggpredict() tells us the predicted population values based on our fox_glm model.
+ggpredict(fox_glm, terms = c("YearScaled"))
+
+```
+The YearScaled Estimate tells us the gradient of the best fit line, i.e. how the population is changing from year to year. Here, the gradient is -0.079.
+Once again, we can exponentiate this number to find the percentage change in fox population every year.
+
+```r
+# Find the percentage change in population per year by using exp() on the YearScaled Estimate
+exp(-0.079)
+
+## From this we get 0.924. This is less than 1, meaning that fox populations are decreasing each year. If we had gotten a number greater than 1, that would indicate that populations are increasing each year instead.
+## The difference between 1 and 0.924 will tell us by how much fox populations are decreasing.
+1 - 0.924 = 0.076
+```
+0.076 as a percentage is 7.6%, meaning that each year, fox populations are decreasing by 7.6%.
+
+The other important column in the summary table is the Standard Error column, as this gives us an indication of how confident we can be with our model results.
+Generally, the smaller the standard error, the more precise our model is. In our model, we have a small standard error of 0.005 for our YearScaled values, indicating that our model is quite precise in predicting fox population trends.
+
+We can also check the precision of our model using confidence intervals (which is a similar concept to the standard error). The `ggpredict()` function will also tell us these confidence intervals, as you may have noticed when we were checking the number of foxes present in year 0.
+Looking at the confidence intervals with `ggpredict()`, we can confirm the precision of our model.
 
 ## 3. Visualise population trends
 {: #part3a}
 
+We can now make a figure to go with our model that visualises arctic fox population trends. `ggplot2` is very useful for this, as you can easily make pretty and professional-looking graphs with it.
+For example, we can use `geom_point()` to easily make a scatterplot, which is a good plot for visualising population trends. 
 
-### Add predicted trends based on your model
+```r
+# Visualise arctic fox population trends
+# Fun fact: if you put brackets () around your entire ggplot code (as I've done below), RStudio will automatically plot your graph without you needing to use plot()!
+(fox_plot <- ggplot() +
+  geom_point(data = arctic_foxes, aes(x = YearScaled,
+                                      y = log(Population)),
+                                      colour = "dodgerblue4") +
+  labs(x = "Year of study",
+       y = "Scaled population",
+       title = "Changes in Arctic Fox Populations in Sweden over time") +
+  theme_test())
+  
+```
+
+From the final output, we can see that fox populations are indeed decreasing over time, and the y-intercept value of 4.267 looks pretty accurate too.
+However, this graph is looking a bit basic. Let's add predicted population values based on our model.
+
+### Add predicted trends based on the model
 {: #part3b}
 
+We can add predicted population values based on our model by first making a new dataframe of these predicted values. This is done using `data.frame()` and `ggpredict()`.
+Then, we use `geom_line()` to add a line of best fit based on the dataframe we have just created, followed by using `geom_ribbon()` to add our confidence intervals.
+
+It is good practice to visualise your confidence intervals when making figures to accompany your linear or generalised linear models, as you can easily communicate how precise your model is
+without needing to tell people your exact standard error or confidence interval values.
+
+```r
+# Add predicted values based on the model ----
+# Make a dataframe based on model
+predicted_foxes <- data.frame(ggpredict(fox_glm, terms = c("YearScaled"))) %>%
+  rename(YearScaled = x, Population = predicted)  # rename columns so they are consistent with what we have been calling them in this tutorial
+
+
+# Plot figure with predicted population values and confidence intervals
+## geom_line() adds a line of best fit based on the model
+## geom_ribbon() adds confidence intervals around the line of best fit based on the model
+(fox_plot <- ggplot() +
+    geom_point(data = arctic_foxes, aes(x = YearScaled,
+                                        y = log(Population)),
+                                        colour = "dodgerblue4") +
+    geom_line(data = predicted_foxes, aes(x = YearScaled,
+                                          y = log(Population))) +
+    geom_ribbon(data = predicted_foxes, aes(x = YearScaled,
+                                            ymin = log(conf.low),
+                                            ymax = log(conf.high)),
+                alpha = 0.4, fill = "deepskyblue") +
+    labs(x = "Year of study",
+         y = "Scaled population",
+         title = "Changes in Arctic Fox Populations in Sweden over time") +
+    theme_test())
+    
+```
 
 This is the end of the tutorial. Summarise what the student has learned, possibly even with a list of learning outcomes. In this tutorial we learned:
 
