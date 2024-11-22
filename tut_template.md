@@ -111,7 +111,7 @@ plot(fox_glm)
 ```
 Comparing the plots of the two models, the residuals vs fitted plot looks much better for the GLM than the LM. The scale-location plot for the GLM also looks flatter, i.e. the residuals now show more equal variance compared to the LM. The points on the Q-Q residuals plot follow the dotted diagonal line more closely as well, showing that they are now closer to a normal distribution.
 
-**Note**: If you look at the residuals vs leverage plot, you'll notice that the GLM makes it evident that there are some leverage points in the data. We could remove them, however we will leave them in for this tutorial because our dataset is small, so removing them could significantly affect our analysis and interpretation of the model.
+***Note***: If you look at the residuals vs leverage plot, you'll notice that the GLM makes it evident that there are some leverage points in the data. We could remove them, however we will leave them in for this tutorial because our dataset is small, so removing them could significantly affect our analysis and interpretation of the model.
 
 ### Interpret the GLM
 {: #part2c}
@@ -122,7 +122,7 @@ Now, use the `summary()` function on fox_glm. A table will appear in the console
 But what does this mean? Let's start with the Estimate column. The Estimate for (Intercept) simply refers to where the line of best fit crosses the y-axis if you were to plot the data.
 In this case, the line of best fit crosses the y-axis at 4.267. This means that in year 0 (remember, year 0 = 1974 because we are using YearScaled!), the Population is 4.27 foxes.
 
-**Keep in mind that this is the log(Population), and not the actual population at year 0. To find the real population at year 0, we can exponentiate 4.27 with `exp()`. We can then check our answer with `ggpredict()` from the `ggeffects` package.**
+***Keep in mind that this is the log(Population), and not the actual population at year 0. To find the real population at year 0, we can exponentiate 4.27 with `exp()`. We can then check our answer with `ggpredict()` from the `ggeffects` package.***
 
 ```r
 # Check summary table for model interpretation
