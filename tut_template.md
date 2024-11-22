@@ -8,7 +8,7 @@ To add images, replace `tutheaderbl1.png` with the file name of any image you up
 
 ### Tutorial Aims
 
-1. [Check linear model assumptions](#part1)
+1. [Check linear model assumptions](#1-check-linear-model-assumptions)
 2. [What is a GLM?](#part2a)
     - [Build the GLM](#part2b)
     - [Interpret the GLM](#part2c)
