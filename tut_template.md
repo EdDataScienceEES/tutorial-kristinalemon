@@ -21,21 +21,14 @@ To add images, replace `tutheaderbl1.png` with the file name of any image you up
 ### Introduction
 Models are an important part of science, allowing us to test for and show correlations between different variables – for example, if an increase in rainfall correlates to an increase in plant height. If you are familiar with linear models, you are likely familiar with their 3 assumptions: all observations are independent, the residuals are normally distributed, and the residuals show equal variance. However, what happens when one of these assumptions are violated? In this tutorial we will use generalised linear models (glms) to deal with this exact situation, and also discuss model interpretation.
 
-<<<<<<< HEAD
-For the model, we will use population data on arctic foxes in Sweden, taken from the WWF's Living Planet Index. The full LPI can be found [here](https://www.livingplanetindex.org/search). We will also use the `ggplot2` package to visualise trends.
-For those not familiar with `ggplot2`, or those who would like a refresher, check out one of these tutorials on data visualisation:
-[Beautiful and Informative Data Visualisation](https://ourcodingclub.github.io/tutorials/datavis/)
-[Customising your figures](https://ourcodingclub.github.io/tutorials/data-vis-2/)
-=======
 For the model, we will use population data on arctic foxes in Sweden, taken from the WWF's Living Planet Index. The full LPI can be found [here](https://www.livingplanetindex.org/search). We will also use `ggplot2` package to visualise trends. For those not familiar with `ggplot2`, or those who would like a refresher, check out one of these tutorials on data visualisation:
     - [Beautiful and Informative Data Visualisation](https://ourcodingclub.github.io/tutorials/datavis/)
     - [Customising your figures](https://ourcodingclub.github.io/tutorials/data-vis-2/)
->>>>>>> 429d9fface63b5cf308207d5c89ff181e1b75cc9
 
 This tutorial also assumes knowledge of linear models, so be sure to check out [this tutorial](https://ourcodingclub.github.io/tutorials/modelling/) if you are unfamiliar with them, or need a refresher.
 
-{% capture callout %} All the files you need to complete this tutorial can be downloaded from [this repository](https://github.com/EdDataScienceEES/tutorial-kristinalemon).
-Click on Code/Download ZIP and unzip the folder, or clone the repository to your own GitHub account. {% endcapture %} {% include callout.html content=callout colour=alert %}
+All the files you need to complete this tutorial can be downloaded from [this repository](https://github.com/EdDataScienceEES/tutorial-kristinalemon).
+Click on Code/Download ZIP and unzip the folder, or clone the repository to your own GitHub account.
 
 
 ## 1. Check linear model assumptions
@@ -118,12 +111,7 @@ plot(fox_glm)
 ```
 Comparing the plots of the two models, the residuals vs fitted plot looks much better for the GLM than the LM. The scale-location plot for the GLM also looks flatter, i.e. the residuals now show more equal variance compared to the LM. The points on the Q-Q residuals plot follow the dotted diagonal line more closely as well, showing that they are now closer to a normal distribution.
 
-<<<<<<< HEAD
-**Note**: If you look at the residuals vs leverage plot, you'll notice that the GLM makes it evident that there are some leverage points in the data (i.e. points that significantly influence the model).
-We could remove them, however we will leave them in for this tutorial because our dataset is small, so removing them could significantly affect our analysis and interpretation of the model.
-=======
 **Note**: If you look at the residuals vs leverage plot, you'll notice that the GLM makes it evident that there are some leverage points in the data. We could remove them, however we will leave them in for this tutorial because our dataset is small, so removing them could significantly affect our analysis and interpretation of the model.
->>>>>>> 429d9fface63b5cf308207d5c89ff181e1b75cc9
 
 ### Interpret the GLM
 {: #part2c}
@@ -133,6 +121,7 @@ Now, use the `summary()` function on fox_glm. A table will appear in the console
 
 But what does this mean? Let's start with the Estimate column. The Estimate for (Intercept) simply refers to where the line of best fit crosses the y-axis if you were to plot the data.
 In this case, the line of best fit crosses the y-axis at 4.267. This means that in year 0 (remember, year 0 = 1974 because we are using YearScaled!), the Population is 4.27 foxes.
+
 **Keep in mind that this is the log(Population), and not the actual population at year 0. To find the real population at year 0, we can exponentiate 4.27 with `exp()`. We can then check our answer with `ggpredict()` from the `ggeffects` package.**
 
 ```r
@@ -191,11 +180,9 @@ However, this graph is looking a bit basic. Let's add predicted population value
 ### Add predicted trends based on the model
 {: #part3b}
 
-We can add predicted population values based on our model by first making a new dataframe of these predicted values. This is done using `data.frame()` and `ggpredict()`.
-Then, we use `geom_line()` to add a line of best fit based on the dataframe we have just created, followed by using `geom_ribbon()` to add our confidence intervals.
+We can add predicted population values based on our model by first making a new dataframe of these predicted values. This is done using `data.frame()` and `ggpredict()`. Then, we use `geom_line()` to add a line of best fit based on the dataframe we have just created, followed by using `geom_ribbon()` to add our confidence intervals.
 
-It is good practice to visualise your confidence intervals when making figures to accompany your linear or generalised linear models, as you can easily communicate how precise your model is
-without needing to tell people your exact standard error or confidence interval values.
+It is good practice to visualise your confidence intervals when making figures to accompany your linear or generalised linear models, as you can easily communicate how precise your model is without needing to tell people your exact standard error or confidence interval values.
 
 ```r
 # Add predicted values based on the model ----
