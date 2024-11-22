@@ -9,11 +9,11 @@ To add images, replace `tutheaderbl1.png` with the file name of any image you up
 ### Tutorial Aims
 
 1. [Check linear model assumptions](#1-check-linear-model-assumptions)
-2. [What is a GLM?](#part2a)
-    - [Build the GLM](#part2b)
-    - [Interpret the GLM](#part2c)
-3. [Visualise population trends](#part3a)
-    - [Add predicted trends based on the model](#part3b)
+2. [What is a GLM?](#2-what-is-a-glm)
+    - [Build the GLM](#build-the-glm)
+    - [Interpret the GLM](#interpret-the-glm)
+3. [Visualise population trends](#3-visualise-population-trends)
+    - [Add predicted trends based on the model](#add-predicted-trends-based-on-the-model)
 
 
 ---------------------------
@@ -32,7 +32,6 @@ Click on Code/Download ZIP and unzip the folder, or clone the repository to your
 
 
 ## 1. Check linear model assumptions
-{: #part1}
 
 Start by opening RStudio, then set your working directory and load the relevant packages and LPI data.
 
@@ -90,7 +89,6 @@ Similarly, the red line on the scale-location plot also forms a parabola, implyi
 So, what can we do to make our model fit the data better? This is where generalised linear models come in!
 
 ## 2. What is a GLM?
-{: #part2a}
 
 Generalised linear models (GLMs) are similar to linear models in that they also show correlations between variables, however they are better equipped to handle data where the residuals
 are not normally distributed. Residuals not being normally distributed tends to happen with count data, which is what we are dealing with (as we are looking at arctic fox populations, 
@@ -99,7 +97,6 @@ more specifically we are looking at the abundance of adults over time).
 GLMs use what is called a 'link function', which tells the model what kind of distribution the response variable has. In this case, our data (count data) has a "poisson" distribution.
 
 ### Build the GLM
-{: #part2b}
 
 Building a GLM is easy - we just use the `glm()` function instead of `lm()`, then specify the distribution (written as family in the model).
 
@@ -114,15 +111,14 @@ Comparing the plots of the two models, the residuals vs fitted plot looks much b
 ***Note***: If you look at the residuals vs leverage plot, you'll notice that the GLM makes it evident that there are some leverage points in the data. We could remove them, however we will leave them in for this tutorial because our dataset is small, so removing them could significantly affect our analysis and interpretation of the model.
 
 ### Interpret the GLM
-{: #part2c}
 
 Now, use the `summary()` function on fox_glm. A table will appear in the console that looks like this:
 ![alt text](insert link to photo)
 
 But what does this mean? Let's start with the Estimate column. The Estimate for (Intercept) simply refers to where the line of best fit crosses the y-axis if you were to plot the data.
-In this case, the line of best fit crosses the y-axis at 4.267. This means that in year 0 (remember, year 0 = 1974 because we are using YearScaled!), the Population is 4.27 foxes.
+In this case, the line of best fit crosses the y-axis at 4.267. This means that in year 0 (remember, year 0 = 1974 because we are using YearScaled!), the Population is 4.267 foxes.
 
-***Keep in mind that this is the log(Population), and not the actual population at year 0. To find the real population at year 0, we can exponentiate 4.27 with `exp()`. We can then check our answer with `ggpredict()` from the `ggeffects` package.***
+***Keep in mind that this is the log(Population), and not the actual population at year 0. To find the real population at year 0, we can exponentiate 4.267 with `exp()`. We can then check our answer with `ggpredict()` from the `ggeffects` package.***
 
 ```r
 # Check summary table for model interpretation
@@ -155,7 +151,6 @@ We can also check the precision of our model using confidence intervals (which i
 Looking at the confidence intervals with `ggpredict()`, we can confirm the precision of our model.
 
 ## 3. Visualise population trends
-{: #part3a}
 
 We can now make a figure to go with our model that visualises arctic fox population trends. `ggplot2` is very useful for this, as you can easily make pretty and professional-looking graphs with it.
 For example, we can use `geom_point()` to easily make a scatterplot, which is a good plot for visualising population trends. 
@@ -178,7 +173,6 @@ From the final output, we can see that fox populations are indeed decreasing ove
 However, this graph is looking a bit basic. Let's add predicted population values based on our model.
 
 ### Add predicted trends based on the model
-{: #part3b}
 
 We can add predicted population values based on our model by first making a new dataframe of these predicted values. This is done using `data.frame()` and `ggpredict()`. Then, we use `geom_line()` to add a line of best fit based on the dataframe we have just created, followed by using `geom_ribbon()` to add our confidence intervals.
 
