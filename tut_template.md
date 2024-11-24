@@ -1,10 +1,7 @@
 # Generalised Linear Modelling and Model Interpretation
 ## When linear model assumptions are violated
 
-
-<center><img src="{{ site.baseurl }}/tutheaderbl.png" alt="Img"></center>
-
-To add images, replace `tutheaderbl1.png` with the file name of any image you upload to your GitHub repository.
+##### Created by Kristina McGuinness
 
 ### Tutorial Aims
 
@@ -168,8 +165,10 @@ For example, we can use `geom_point()` to easily make a scatterplot, which is a 
   theme_test())
   
 ```
+You should have a graph that looks like this:
+![alt text](insert link to photo)
 
-From the final output, we can see that fox populations are indeed decreasing over time, and the y-intercept value of 4.267 looks pretty accurate too.
+From this final output, we can see that fox populations are indeed decreasing over time, and the y-intercept value of 4.267 looks pretty accurate too.
 However, this graph is looking a bit basic. Let's add predicted population values based on our model.
 
 ### Add predicted trends based on the model
@@ -204,6 +203,10 @@ predicted_foxes <- data.frame(ggpredict(fox_glm, terms = c("YearScaled"))) %>%
     theme_test())
     
 ```
+Your graph should now look like this:
+![alt text](insert link to photo)
+
+## Summary
 
 That brings us to the end of this tutorial, well done for getting through it! To summarise, we have learned:
 
