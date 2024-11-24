@@ -166,7 +166,8 @@ For example, we can use `geom_point()` to easily make a scatterplot, which is a 
   
 ```
 You should have a graph that looks like this:
-![alt text](insert link to photo)
+
+![alt text](https://github.com/EdDataScienceEES/tutorial-kristinalemon/blob/master/images-for-tutorial/basic-scatterplot.jpeg)
 
 From this final output, we can see that fox populations are indeed decreasing over time, and the y-intercept value of 4.267 looks pretty accurate too.
 However, this graph is looking a bit basic. Let's add predicted population values based on our model.
@@ -203,8 +204,9 @@ predicted_foxes <- data.frame(ggpredict(fox_glm, terms = c("YearScaled"))) %>%
     theme_test())
     
 ```
-Your graph should now look like this:
-![alt text](insert link to photo)
+Your graph should now look like this: 
+
+![alt text](https://github.com/EdDataScienceEES/tutorial-kristinalemon/blob/master/images-for-tutorial/scatterplot-with-trends.jpeg)
 
 ## Summary
 
@@ -215,11 +217,10 @@ That brings us to the end of this tutorial, well done for getting through it! To
 ##### - how to visualise population trends with a scatterplot using `ggplot2`
 ##### - how to use `ggpredict()`, `geom_line()` and `geom_ribbon()` to add predicted trends to a scatterplot
 
+
+<hr>
+<hr>
 For more on `ggplot2`, read the official <a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf" target="_blank">ggplot2 cheatsheet</a>.
-
-
-<hr>
-<hr>
 
 #### Check out our <a href="https://ourcodingclub.github.io/links/" target="_blank">Useful links</a> page where you can find loads of guides and cheatsheets.
 
