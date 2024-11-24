@@ -205,17 +205,15 @@ predicted_foxes <- data.frame(ggpredict(fox_glm, terms = c("YearScaled"))) %>%
     
 ```
 
-This is the end of the tutorial. Summarise what the student has learned, possibly even with a list of learning outcomes. In this tutorial we learned:
+That brings us to the end of this tutorial, well done for getting through it! To summarise, we have learned:
 
-##### - how to generate fake bivariate data
-##### - how to create a scatterplot in ggplot2
-##### - some of the different plot methods in ggplot2
-
-We can also provide some useful links, include a contact form and a way to send feedback.
+##### - what generalised linear models (GLMs) are and when to use them
+##### - how to interpret a GLM using the summary table
+##### - how to visualise population trends with a scatterplot using `ggplot2`
+##### - how to use `ggpredict()`, `geom_line()` and `geom_ribbon()` to add predicted trends to a scatterplot
 
 For more on `ggplot2`, read the official <a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf" target="_blank">ggplot2 cheatsheet</a>.
 
-Everything below this is footer material - text and links that appears at the end of all of your tutorials.
 
 <hr>
 <hr>
