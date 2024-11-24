@@ -110,7 +110,8 @@ Comparing the plots of the two models, the residuals vs fitted plot looks much b
 ### Interpret the GLM
 
 Now, use the `summary()` function on fox_glm. A table will appear in the console that looks like this:
-![alt text](insert link to photo)
+
+![alt text](https://github.com/EdDataScienceEES/tutorial-kristinalemon/blob/master/images-for-tutorial/glm_summary_table.png)
 
 But what does this mean? Let's start with the Estimate column. The Estimate for (Intercept) simply refers to where the line of best fit crosses the y-axis if you were to plot the data.
 In this case, the line of best fit crosses the y-axis at 4.267. This means that in year 0 (remember, year 0 = 1974 because we are using YearScaled!), the Population is 4.267 foxes.
