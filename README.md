@@ -1,5 +1,12 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/6eRt7-90)
-# tutorial-instructions
+
+- Name: Kristina McGuinness
+- Student number: s2052506
+- Data Science tutorial assignment
+
+This repo contains the tutorial Generalised Linear Modelling: When linear model assumptions are violated. The LPI data relevant to this tutorial, as well as the images used in the tutorial, are also found in this repo in the "data" and "images-for-tutorial" folders.
+
+
 ## Instructions for Tutorial Assignment
 
 The key final assignment for the Data Science course is to create your own tutorial. Your tutorial has to communicate a specific quantitative skill - you can choose the level at which you pitch your tutorial and how advanced or introductory it is. You can create "part 2" tutorials where "part 1" is an existing Coding Club tutorial.
